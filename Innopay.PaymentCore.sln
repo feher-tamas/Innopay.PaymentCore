@@ -5,6 +5,8 @@ VisualStudioVersion = 17.10.34902.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{0B408F92-444A-4564-B2B9-DD605529B97D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Innopay.PaymentCore.API", "Innopay.PaymentCore.API\Innopay.PaymentCore.API.csproj", "{8081BD86-F78F-4117-8067-0EE1B4FBFF8C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{0B408F92-444A-4564-B2B9-DD605529B97D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B408F92-444A-4564-B2B9-DD605529B97D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B408F92-444A-4564-B2B9-DD605529B97D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8081BD86-F78F-4117-8067-0EE1B4FBFF8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8081BD86-F78F-4117-8067-0EE1B4FBFF8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8081BD86-F78F-4117-8067-0EE1B4FBFF8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8081BD86-F78F-4117-8067-0EE1B4FBFF8C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

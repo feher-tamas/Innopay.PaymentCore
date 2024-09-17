@@ -18,14 +18,13 @@ namespace Application.Infrastrucure
     {
         private readonly string _connectionString;
         private readonly bool _useConsoleLogger;
-        private MessageBus _messageBus;
+        private IBus _messageBus;
         private static readonly Type[] EnumerationTypes = { typeof(PaymentRequest) };
         public DbSet<PaymentRequest> PaymentRequests { get; set; }
-        public PaymentRequestContext(
-         string connectionString, bool useConsoleLogger, MessageBus messageBus)
+        public PaymentRequestContext( IBus messageBus)
         {
-            _connectionString = connectionString;
-            _useConsoleLogger = useConsoleLogger;
+            _connectionString = @"Server = (localdb)\\MSSQLLocalDB; Integrated Security = true; Database = PaymentRequestContext;";
+            _useConsoleLogger = true;
             _messageBus = messageBus;
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
