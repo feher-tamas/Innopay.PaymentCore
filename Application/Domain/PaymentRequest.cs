@@ -1,4 +1,5 @@
-﻿using FunctionExtensions.Entity;
+﻿using Application.Domain.Common;
+using FunctionExtensions.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Domain
 {
-    public class PaymentRequest : Entity
+    public class PaymentRequest : EntityBase
     {
         public virtual Amount Amount { get; private set; }
         public string Currency { get; private set; }
@@ -30,9 +31,10 @@ namespace Application.Domain
             CreatedAt = createdAt;
             UpdateAt = updatedAt;
         }
-        public void UpdatePaymentRequest(Amount amount, string currency, Status status, Guid payerID, Guid payeeID)
+        public void UpdatePaymentRequest(Status status, DateTime processedAt)
         {
-
+            RaiseDomainEvent(new PaymentStatusChangeEvent(this.Id, status.ToString(), processedAt));
+            Status = status; 
         }
     }
 }

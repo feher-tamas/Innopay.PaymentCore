@@ -9,10 +9,10 @@ namespace Application.Domain
 {
     public sealed class PaymentStatusChangeEvent : IEvent
     {
-    public int PaymentRequestId { get; }
+    public long PaymentRequestId { get; }
     public string PaymentStatus { get; }
     public DateTime ProcessedAt { get; }
-    public PaymentStatusChangeEvent(int paymentRequestId, string paymentStatus, DateTime processedAt)
+    public PaymentStatusChangeEvent(long paymentRequestId, string paymentStatus, DateTime processedAt)
     {
         paymentRequestId = paymentRequestId;
         paymentStatus = paymentStatus;

@@ -24,7 +24,7 @@ namespace Application.Domain
         {
             if (value < 0)
             {
-                return Result.Failure<Amount>("Value can't be less zero");
+                return Result.Failure<Amount>("Value can't be zero");
             }
             return Result.Success(new Amount(value));
         }
