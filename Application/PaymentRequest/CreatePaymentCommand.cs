@@ -41,7 +41,7 @@ namespace Application.PaymentRequest
                 {
                     return Result.Failure(amount.Error.Message);
                 }
-                Domain.PaymentRequest paymentrequest = new Domain.PaymentRequest( command.PaymentRequsetId,amount.Value, "HUF", Status.Pending, command.PayerID, command.PayeeID, DateTime.Now, DateTime.Now);
+                Domain.PaymentRequest paymentrequest = new Domain.PaymentRequest(command.PaymentRequsetId, amount.Value, "HUF", Status.Pending, command.PayerID, command.PayeeID, DateTime.Now, DateTime.Now);
                 _context.Add(paymentrequest);
                 _context.SaveChanges();
                 return Result.Success();

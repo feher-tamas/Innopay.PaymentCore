@@ -14,17 +14,24 @@ namespace Application.Infrastrucure
     public class PaymentStatusRepository
     {
         private readonly string _connectionString = @"Data Source=(localdb)\readpaymentdb;Integrated Security=True;Encrypt=True";
-        private readonly ILogger<PaymentStatusRepository>_logger;
-        public PaymentStatusRepository(ILogger<PaymentStatusRepository>logger)
+        private readonly ILogger<PaymentStatusRepository> _logger;
+        public PaymentStatusRepository(ILogger<PaymentStatusRepository> logger)
         {
-            _logger=logger;
+            _logger = logger;
         }
         public void InsertPaymentStatus(Guid paymentRequestId, string status, DateTime processedAt)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
-                var sql = "INSERT INTO PaymentStatus (PaymentRequestId, Status, ProcessedAt) VALUES (@PaymentRequestId, @Status, @ProcessedAt)";
-                var newPaymentStatus = new { PaymentRequestId = paymentRequestId.ToString(), Status = status, ProcessedAt= processedAt };
+                var sql = @"INSERT INTO PaymentStatus (PaymentRequestId, Status, ProcessedAt)" +
+                           "VALUES (@PaymentRequestId, @Status, @ProcessedAt)";
+                var newPaymentStatus = new
+                { 
+                    PaymentRequestId = paymentRequestId.ToString(), 
+                    Status = status, 
+                    ProcessedAt = processedAt 
+                };
+
                 var rowsAffected = connection.Execute(sql, newPaymentStatus);
                 _logger.LogInformation($"{rowsAffected} row(s) inserted.");
             }
@@ -33,8 +40,17 @@ namespace Application.Infrastrucure
         {
             using (var connection = new SqlConnection(_connectionString))
             {
-                var sql = "Update PaymentStatus SET Status = @Status, ProcessedAt=@ProcessedAt WHERE PaymentRequestId = @PaymentRequestId";
-                var newPaymentStatus = new { PaymentRequestId = paymentRequestId.ToString(), Status = status, ProcessedAt = processedAt };
+                var sql = "Update PaymentStatus " +
+                    "SET Status = @Status, " +
+                    "ProcessedAt=@ProcessedAt " +
+                    "WHERE PaymentRequestId=@PaymentRequestId";
+
+                var newPaymentStatus = new 
+                { 
+                    PaymentRequestId = paymentRequestId.ToString(),
+                    Status = status,
+                    ProcessedAt = processedAt 
+                };
                 var rowsAffected = connection.Execute(sql, newPaymentStatus);
                 _logger.LogInformation($"{rowsAffected} row(s) updated.");
             }

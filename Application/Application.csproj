@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.1.35" />
+    <PackageReference Include="FT.CQRS" Version="1.2.0" />
     <PackageReference Include="FunctionExtensions" Version="1.0.0" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
@@ -19,10 +20,6 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\cqrs\FT.CQRS.csproj" />
   </ItemGroup>
 
 </Project>
