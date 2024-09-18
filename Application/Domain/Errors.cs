@@ -10,8 +10,8 @@ namespace Application.Domain
     {
         public static class Payment
         {
-            public static Error AmountIsTaken(decimal amount) =>
-                new Error("payment.amount.is.taken", $"Payment amount '{amount}' is taken");
+            public static Error AmountCannotBeLessThenZero(decimal amount) =>
+                new Error("payment.amount.cannot.be.less.than.zero", $"Payment amount '{amount}' cannot be less than zero");
 
             /* other errors specific to students go here */
         }

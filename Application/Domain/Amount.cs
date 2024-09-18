@@ -24,7 +24,7 @@ namespace Application.Domain
         {
             if (value < 0)
             {
-                return Result.Failure<Amount,Error>(Errors.Payment.AmountIsTaken(value));
+                return Result.Failure<Amount,Error>(Errors.Payment.AmountCannotBeLessThenZero(value));
             }
             return Result.Success<Amount,Error>(new Amount(value));
         }

@@ -38,7 +38,7 @@ namespace Application.Domain
             PayeeId = payeeID;
             CreatedAt = createdAt;
             UpdateAt = updatedAt;
-            RaiseDomainEvent(new PaymentStatusCreatedEvent(this.PaymentRequestID, status.ToString(), CreatedAt));
+            RaiseDomainEvent(new PaymentRequestSubmittedEvent(this.PaymentRequestID, status.ToString(), CreatedAt));
         }
         public void UpdatePaymentRequest(Status status, DateTime processedAt)
         {

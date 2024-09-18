@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 
 namespace Application.PaymentRequest
 {
-    public class GetPaymentStatusListQuery : IQuery<List<PaymentStatusDto>>
+    public class QueryPaymentStatus : IQuery<List<PaymentStatusDto>>
     {
         [QueryLog]
-        internal sealed class GetPaymentStatusListQueryHandler : IQueryHandler<GetPaymentStatusListQuery, List<PaymentStatusDto>>
+        internal sealed class QueryPaymentStatusHandler : IQueryHandler<QueryPaymentStatus, List<PaymentStatusDto>>
         {
             private PaymentStatusRepository _paymentStatusRepository;
-            public GetPaymentStatusListQueryHandler(PaymentStatusRepository paymentStatusRepository)
+            public QueryPaymentStatusHandler(PaymentStatusRepository paymentStatusRepository)
             {
                 _paymentStatusRepository = paymentStatusRepository;
             }
-            public List<PaymentStatusDto> Handle(GetPaymentStatusListQuery query)
+            public List<PaymentStatusDto> Handle(QueryPaymentStatus query)
             {
                 return _paymentStatusRepository.GetAll();
             }

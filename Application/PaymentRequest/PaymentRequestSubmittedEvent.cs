@@ -10,28 +10,28 @@ using System.Threading.Tasks;
 
 namespace Application.PaymentRequest
 {
-    public class PaymentStatusCreatedEvent : IEvent
+    public class PaymentRequestSubmittedEvent : IEvent
     {
         public Guid PaymentRequestId { get; }
         public string PaymentStatus { get; }
         public DateTime ProcessedAt { get; }
-        public PaymentStatusCreatedEvent(Guid paymentRequestId, string paymentStatus, DateTime processedAt)
+        public PaymentRequestSubmittedEvent(Guid paymentRequestId, string paymentStatus, DateTime processedAt)
         {
             PaymentRequestId = paymentRequestId;
             PaymentStatus = paymentStatus;
             ProcessedAt = processedAt;
         }
         [EventLog]
-        internal sealed class PaymentStatusCreatedEventHandler : IEventHandler<PaymentStatusCreatedEvent>
+        internal sealed class PaymentRequestSubmittedEventHandler : IEventHandler<PaymentRequestSubmittedEvent>
         {
             private PaymentStatusRepository _paymentStatusRepository;
            
-            public PaymentStatusCreatedEventHandler(PaymentStatusRepository paymentStatusRepository)
+            public PaymentRequestSubmittedEventHandler(PaymentStatusRepository paymentStatusRepository)
             {
                 _paymentStatusRepository = paymentStatusRepository;
             }
 
-            public Result Handle(PaymentStatusCreatedEvent domainEvent)
+            public Result Handle(PaymentRequestSubmittedEvent domainEvent)
             {
                 _paymentStatusRepository.InsertPaymentStatus(domainEvent.PaymentRequestId, domainEvent.PaymentStatus, domainEvent.ProcessedAt);
                 return Result.Success();
