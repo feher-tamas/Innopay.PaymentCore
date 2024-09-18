@@ -19,11 +19,11 @@ namespace Application.Infrastrucure
         private readonly string _connectionString;
         private readonly bool _useConsoleLogger;
         private IBus _messageBus;
-        private static readonly Type[] EnumerationTypes = { typeof(PaymentRequest) };
-        public DbSet<PaymentRequest> PaymentRequests { get; set; }
+        private static readonly Type[] EnumerationTypes = { typeof(Domain.PaymentRequest) };
+        public DbSet<Domain.PaymentRequest> PaymentRequests { get; set; }
         public PaymentRequestContext( IBus messageBus)
         {
-            _connectionString = @"Server = (localdb)\\MSSQLLocalDB; Integrated Security = true; Database = PaymentRequestContext;";
+            _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Integrated Security=True;Encrypt=True";
             _useConsoleLogger = true;
             _messageBus = messageBus;
         }
@@ -50,17 +50,18 @@ namespace Application.Infrastrucure
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<PaymentRequest>(x =>
+            modelBuilder.Entity<Domain.PaymentRequest>(x =>
             {
-                x.ToTable("PaymentRequest").HasKey(k => k.Id);
-                x.Property(p => p.Id).HasColumnName("PaymentRequestID");
+                x.ToTable("PaymentRequest")
+                .HasKey(k => k.Id);
+                x.Property(p => p.Id).ValueGeneratedOnAdd();
                 x.Property(p => p.Amount)
                     .HasConversion(p => p.Value, p => Amount.Create(p).Value);
                 x.Property(p => p.Currency).HasColumnName("Currency");
                 x.Property(p => p.Status)
                     .HasConversion<int>();
                 x.Property(p => p.PayeeId).HasColumnName("PayeeId");
-                x.Property(p => p.PayerID).HasColumnName("PayerID");
+                x.Property(p => p.PayerId).HasColumnName("PayerID");
                 x.Property(p => p.CreatedAt).HasColumnName("CreatedAt");
                 x.Property(p => p.UpdateAt).HasColumnName("UpdateAt");
             });      
@@ -72,13 +73,17 @@ namespace Application.Infrastrucure
 
             foreach (EntityEntry enumerationEntry in enumerationEntries)
             {
-                enumerationEntry.State = EntityState.Unchanged;
+                // Csak akkor állítsd az állapotot, ha az Id végleges értéket tartalmaz
+                if (!enumerationEntry.Property("Id").IsTemporary)
+                {
+                    enumerationEntry.State = EntityState.Unchanged;
+                }
             }
 
-            List<Entity> entities = ChangeTracker
+            List<EntityBase> entities = ChangeTracker
                 .Entries()
-                .Where(x => x.Entity is Entity)
-                .Select(x => (Entity)x.Entity)
+                .Where(x => x.Entity is EntityBase)
+                .Select(x => (EntityBase)x.Entity)
                 .ToList();
 
             int result = base.SaveChanges();

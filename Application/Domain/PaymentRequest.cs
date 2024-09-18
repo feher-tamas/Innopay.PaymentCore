@@ -1,4 +1,5 @@
 ﻿using Application.Domain.Common;
+using Application.PaymentRequest;
 using FunctionExtensions.Entity;
 using System;
 using System.Collections.Generic;
@@ -13,8 +14,8 @@ namespace Application.Domain
         public virtual Amount Amount { get; private set; }
         public string Currency { get; private set; }
         public Status Status { get; private set; }
-        public Guid PayerID { get; private set; }
-        public Guid PayeeId { get; private set; }
+        public string PayerId { get; private set; }
+        public string PayeeId { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime UpdateAt { get; private set; }
 
@@ -22,19 +23,21 @@ namespace Application.Domain
         {
 
         }
-        public PaymentRequest( Amount amount, string currency, Status status,Guid payerID, Guid payeeID, DateTime createdAt, DateTime updatedAt):this()
+        public PaymentRequest( Amount amount, string currency, Status status,string payerID, string payeeID, DateTime createdAt, DateTime updatedAt):this()
         {
             Amount = amount;
             Currency = currency;
             Status = status;
-            PayerID = payerID;
+            PayerId = payerID;
+            PayeeId = payeeID;
             CreatedAt = createdAt;
             UpdateAt = updatedAt;
+            RaiseDomainEvent(new PaymentStatusCreatedEvent(this.Id, status.ToString(), CreatedAt));
         }
         public void UpdatePaymentRequest(Status status, DateTime processedAt)
         {
-            RaiseDomainEvent(new PaymentStatusChangeEvent(this.Id, status.ToString(), processedAt));
-            Status = status; 
+            Status = status;
+           // RaiseDomainEvent(new PaymentStatusChangeEvent(this.Id, status.ToString(), processedAt));        
         }
     }
 }

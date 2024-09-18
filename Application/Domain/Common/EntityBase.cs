@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Domain.Common
 {
-    public abstract class EntityBase : Entity
+    public abstract class EntityBase : Entity<int>
     {
         private readonly List<IEvent> _domainEvents = new List<IEvent>();
         public IReadOnlyList<IEvent> DomainEvents => _domainEvents;

@@ -20,13 +20,13 @@ namespace Application.Domain
         {
             _value = value;
         }
-        public static Result<Amount> Create(decimal value)
+        public static Result<Amount,Error> Create(decimal value)
         {
             if (value < 0)
             {
-                return Result.Failure<Amount>("Value can't be zero");
+                return Result.Failure<Amount,Error>(Errors.Payment.AmountIsTaken(value));
             }
-            return Result.Success(new Amount(value));
+            return Result.Success<Amount,Error>(new Amount(value));
         }
         protected override IEnumerable<IComparable> GetEqualityComponents()
         {
