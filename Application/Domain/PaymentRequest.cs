@@ -11,6 +11,7 @@ namespace Application.Domain
 {
     public class PaymentRequest : EntityBase
     {
+        public Guid PaymentRequestID { get; private set; }
         public virtual Amount Amount { get; private set; }
         public string Currency { get; private set; }
         public Status Status { get; private set; }
@@ -23,8 +24,13 @@ namespace Application.Domain
         {
 
         }
-        public PaymentRequest( Amount amount, string currency, Status status,string payerID, string payeeID, DateTime createdAt, DateTime updatedAt):this()
+        public PaymentRequest(Guid paymantRequestId, Amount amount,
+                            string currency, Status status,
+                            string payerID, string payeeID,
+                            DateTime createdAt, DateTime updatedAt) : this()
+
         {
+            PaymentRequestID = paymantRequestId;
             Amount = amount;
             Currency = currency;
             Status = status;
@@ -32,12 +38,13 @@ namespace Application.Domain
             PayeeId = payeeID;
             CreatedAt = createdAt;
             UpdateAt = updatedAt;
-            RaiseDomainEvent(new PaymentStatusCreatedEvent(this.Id, status.ToString(), CreatedAt));
+            RaiseDomainEvent(new PaymentStatusCreatedEvent(this.PaymentRequestID, status.ToString(), CreatedAt));
         }
         public void UpdatePaymentRequest(Status status, DateTime processedAt)
         {
             Status = status;
-           // RaiseDomainEvent(new PaymentStatusChangeEvent(this.Id, status.ToString(), processedAt));        
+            UpdateAt = processedAt;
+            RaiseDomainEvent(new PaymentStatusUpdatedEvent(this.PaymentRequestID, status.ToString(), processedAt));
         }
     }
 }

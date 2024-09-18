@@ -13,12 +13,14 @@ namespace Application.PaymentRequest
 {
     public class CreatePaymentCommand :ICommand
     {
+        public Guid PaymentRequsetId { get; }
         public string PayerID { get; }
         public string PayeeID { get; }
         public decimal Amount { get;}
        
-        public CreatePaymentCommand(string payerID, string payeeID, decimal amount)
+        public CreatePaymentCommand(Guid paymentRequestId , string payerID, string payeeID, decimal amount)
         {
+            PaymentRequsetId = paymentRequestId;
             PayerID = payerID;
             PayeeID = payeeID;
             Amount = amount;
@@ -39,7 +41,7 @@ namespace Application.PaymentRequest
                 {
                     return Result.Failure(amount.Error.Message);
                 }
-                Domain.PaymentRequest paymentrequest = new Domain.PaymentRequest(amount.Value, "HUF", Status.Pending, command.PayerID, command.PayeeID, DateTime.Now, DateTime.Now);
+                Domain.PaymentRequest paymentrequest = new Domain.PaymentRequest( command.PaymentRequsetId,amount.Value, "HUF", Status.Pending, command.PayerID, command.PayeeID, DateTime.Now, DateTime.Now);
                 _context.Add(paymentrequest);
                 _context.SaveChanges();
                 return Result.Success();

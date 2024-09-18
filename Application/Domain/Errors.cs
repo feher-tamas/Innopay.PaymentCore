@@ -18,7 +18,7 @@ namespace Application.Domain
 
         public static class General
         {
-            public static Error NotFound(string entityName, long id) =>
+            public static Error NotFound(string entityName, Guid id) =>
                 new Error("record.not.found", $"'{entityName}' not found for Id '{id}'");
 
             /* other general errors go here */

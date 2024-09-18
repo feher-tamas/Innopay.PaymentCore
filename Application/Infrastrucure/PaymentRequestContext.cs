@@ -55,6 +55,7 @@ namespace Application.Infrastrucure
                 x.ToTable("PaymentRequest")
                 .HasKey(k => k.Id);
                 x.Property(p => p.Id).ValueGeneratedOnAdd();
+                x.Property(p => p.PaymentRequestID).HasColumnName("PaymentRequestID");
                 x.Property(p => p.Amount)
                     .HasConversion(p => p.Value, p => Amount.Create(p).Value);
                 x.Property(p => p.Currency).HasColumnName("Currency");
