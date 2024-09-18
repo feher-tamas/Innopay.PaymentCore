@@ -33,5 +33,18 @@ namespace Application.PaymentRequest
                 return Result.Success();
             }
         }
+        internal sealed class PaymentStatusCreatedEvent2Handler : IEventHandler<PaymentStatusCreatedEvent>
+        {
+            private PaymentStatusRepository _paymentStatusRepository;
+            public PaymentStatusCreatedEvent2Handler(PaymentStatusRepository paymentStatusRepository)
+            {
+                _paymentStatusRepository = paymentStatusRepository;
+            }
+
+            public Result Handle(PaymentStatusCreatedEvent domainEvent)
+            {
+                return Result.Success();
+            }
+        }
     }
 }
