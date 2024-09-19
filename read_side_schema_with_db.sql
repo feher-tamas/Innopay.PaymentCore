@@ -4,7 +4,7 @@ CREATE DATABASE ReadPaymentStatus;
 
 USE ReadPaymentStatus;
 
-CREATE TABLE PaymentStatusView (
+CREATE TABLE PaymentStatus (
     PaymentRequestId UNIQUEIDENTIFIER PRIMARY KEY,
     Status NVARCHAR(20) NOT NULL,
     ProcessedAt DATETIME NOT NULL
