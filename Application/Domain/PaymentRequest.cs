@@ -1,5 +1,5 @@
 ﻿using Application.Domain.Common;
-using Application.PaymentRequest;
+using Application.Features;
 using FunctionExtensions.Entity;
 using System;
 using System.Collections.Generic;
@@ -38,7 +38,7 @@ namespace Application.Domain
             PayeeId = payeeID;
             CreatedAt = createdAt;
             UpdateAt = updatedAt;
-            RaiseDomainEvent(new PaymentRequestSubmittedEvent(this.PaymentRequestID, status.ToString(), CreatedAt));
+            RaiseDomainEvent(new PaymentRequestCreatedEvent(this.PaymentRequestID, status.ToString(), CreatedAt));
         }
         public void UpdatePaymentRequest(Status status, DateTime processedAt)
         {

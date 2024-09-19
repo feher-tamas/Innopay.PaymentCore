@@ -13,6 +13,7 @@ namespace Application.Infrastrucure
 {
     public class PaymentStatusRepository
     {
+        // Warning: Ilyet soha ne csináljatok, a connecton string ne legyen benna a kódban
         private readonly string _connectionString = @"Data Source=(localdb)\readpaymentdb;Integrated Security=True;Encrypt=True";
         private readonly ILogger<PaymentStatusRepository> _logger;
         public PaymentStatusRepository(ILogger<PaymentStatusRepository> logger)

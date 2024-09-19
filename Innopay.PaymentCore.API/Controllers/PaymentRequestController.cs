@@ -1,5 +1,5 @@
 ﻿using Application.Domain;
-using Application.PaymentRequest;
+using Application.Features;
 using FT.CQRS;
 using FunctionExtensions.Result;
 using Microsoft.AspNetCore.Http;
@@ -16,10 +16,10 @@ namespace Innopay.PaymentCore.API.Controllers
         public PaymentRequestController(IBus messageBus) { 
             _messageBus = messageBus;
         }
-        [HttpPost("SubmitPaymentRequest")]
-        public IActionResult CreatePayment(string payerID, string payeeID, long amount)
+        [HttpPost("CreatePaymentRequest")]
+        public IActionResult CreatePaymentRequest(string payerID, string payeeID, long amount)
         {
-            var result = _messageBus.Send(new SubmitPaymentRequestCommand(Guid.NewGuid(), payerID, payeeID, amount));
+            var result = _messageBus.Send(new CreatePaymentRequestCommand(Guid.NewGuid(), payerID, payeeID, amount));
             if (result.IsFailure) {
                 return BadRequest(result.Error);
             }

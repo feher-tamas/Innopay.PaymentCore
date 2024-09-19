@@ -8,21 +8,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.PaymentRequest
+namespace Application.Features
 {
-    public class PaymentRequestSubmittedEvent : IEvent
+    public class PaymentRequestCreatedEvent : IEvent
     {
         public Guid PaymentRequestId { get; }
         public string PaymentStatus { get; }
         public DateTime ProcessedAt { get; }
-        public PaymentRequestSubmittedEvent(Guid paymentRequestId, string paymentStatus, DateTime processedAt)
+        public PaymentRequestCreatedEvent(Guid paymentRequestId, string paymentStatus, DateTime processedAt)
         {
             PaymentRequestId = paymentRequestId;
             PaymentStatus = paymentStatus;
             ProcessedAt = processedAt;
         }
         [EventLog]
-        internal sealed class PaymentRequestSubmittedEventHandler : IEventHandler<PaymentRequestSubmittedEvent>
+        internal sealed class PaymentRequestSubmittedEventHandler : IEventHandler<PaymentRequestCreatedEvent>
         {
             private PaymentStatusRepository _paymentStatusRepository;
            
@@ -31,7 +31,7 @@ namespace Application.PaymentRequest
                 _paymentStatusRepository = paymentStatusRepository;
             }
 
-            public Result Handle(PaymentRequestSubmittedEvent domainEvent)
+            public Result Handle(PaymentRequestCreatedEvent domainEvent)
             {
                 _paymentStatusRepository.InsertPaymentStatus(domainEvent.PaymentRequestId, domainEvent.PaymentStatus, domainEvent.ProcessedAt);
                 return Result.Success();

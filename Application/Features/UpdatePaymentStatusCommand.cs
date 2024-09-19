@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.PaymentRequest
+namespace Application.Features
 {
     public class UpdatePaymentStatusCommand :ICommand
     {

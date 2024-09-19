@@ -23,6 +23,7 @@ namespace Application.Infrastrucure
         public DbSet<Domain.PaymentRequest> PaymentRequests { get; set; }
         public PaymentRequestContext( IBus messageBus)
         {
+            // Warning: Ilyet soha ne csináljatok, a connecton string ne legyen benna a kódban
             _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Integrated Security=True;Encrypt=True";
             _useConsoleLogger = true;
             _messageBus = messageBus;

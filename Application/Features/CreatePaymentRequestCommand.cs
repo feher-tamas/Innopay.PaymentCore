@@ -9,16 +9,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.PaymentRequest
+namespace Application.Features
 {
-    public class SubmitPaymentRequestCommand :ICommand
+    public class CreatePaymentRequestCommand :ICommand
     {
         public Guid PaymentRequsetId { get; }
         public string PayerID { get; }
         public string PayeeID { get; }
         public decimal Amount { get;}
        
-        public SubmitPaymentRequestCommand(Guid paymentRequestId , string payerID, string payeeID, decimal amount)
+        public CreatePaymentRequestCommand(Guid paymentRequestId , string payerID, string payeeID, decimal amount)
         {
             PaymentRequsetId = paymentRequestId;
             PayerID = payerID;
@@ -26,15 +26,15 @@ namespace Application.PaymentRequest
             Amount = amount;
         }
         [CommandLog]
-        internal sealed class SubmitPaymentRequestCommandHandler : ICommandHandler<SubmitPaymentRequestCommand>
+        internal sealed class CreatePaymentRequestCommandHandler : ICommandHandler<CreatePaymentRequestCommand>
         {
             PaymentRequestContext _context;
 
-            public SubmitPaymentRequestCommandHandler(PaymentRequestContext context)
+            public CreatePaymentRequestCommandHandler(PaymentRequestContext context)
             {
                 _context = context;
             }
-            public Result Handle(SubmitPaymentRequestCommand command)
+            public Result Handle(CreatePaymentRequestCommand command)
             {
                 Result<Amount,Error> amount = Domain.Amount.Create(command.Amount);
                 if (amount.IsFailure)
